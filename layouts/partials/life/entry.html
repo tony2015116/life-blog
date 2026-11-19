@@ -1,0 +1,13 @@
+{{- /* One row in a list: date, title, section label and tags. Pass the page as context. */ -}}
+{{- $section := site.GetPage .Section -}}
+<article class="blog-entry">
+  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+  <div>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    {{ with .Description }}<p class="life-entry-desc">{{ . }}</p>{{ end }}
+    <ul aria-label="栏目和标签">
+      {{ with $section }}<li><a class="life-chip life-chip-{{ $.Section }}" href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+      {{ range .GetTerms "tags" }}<li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>{{ end }}
+    </ul>
+  </div>
+</article>

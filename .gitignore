@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+Thumbs.db
+/public/
+/resources/
+/.hugo_build.lock
+/README.html
+/derby.log
+/logs/
+*_cache/
+*.lock~
+.httr-oauth
+.quarto

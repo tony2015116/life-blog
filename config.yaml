@@ -1,0 +1,99 @@
+baseURL: https://life.mguo.dpdns.org/
+title: MGUO 的生活笔记
+enableRobotsTXT: true
+enableEmoji: true
+theme: hugo-theme-jane
+pagination:
+  pagerSize: 30
+rssLimit: 20
+copyright: ''
+
+ignoreFiles:
+  - '\.Rmd$'
+  - '\.Rmarkdown$'
+  - '_cache$'
+  - '\.(knit|utf8)\.md$'
+  - '\.lock~$'
+
+# 三个栏目各自的网址格式
+permalinks:
+  life: /life/:year/:month/:slug/
+  sop: /sop/:slug/
+  recipes: /recipes/:slug/
+
+taxonomies:
+  tag: tags
+
+defaultContentLanguage: zh-cn
+locale: zh-cn
+
+sitemap:
+  changefreq: weekly
+  priority: 0.5
+  filename: sitemap.xml
+
+menu:
+  main:
+    - identifier: life
+      name: 生活
+      url: life/
+      weight: 10
+    - identifier: sop
+      name: SOP
+      url: sop/
+      weight: 20
+    - identifier: recipes
+      name: 菜谱
+      url: recipes/
+      weight: 30
+    - identifier: tags
+      name: 标签
+      url: tags/
+      weight: 40
+
+params:
+  # 首页「最近更新」从这三个栏目里取
+  mainSections: [life, sop, recipes]
+  description: 郭猛的生活记录、常用流程（SOP）和家常菜谱。
+  authorInfo:
+    name: 郭猛
+  customCSS: ['custom.css', 'life.css']
+  customJS: []
+  dateFormatToUse: '2006-01-02'
+
+  # 侧栏里链接到技术博客和个人主页
+  techBlog: https://blog.mguo.dpdns.org/
+  homepage: https://mguo.dpdns.org/
+
+  photoswipe: false
+  homeFullContent: false
+  since: '2026'
+  mathjax: false
+  katex: false
+  moreMeta: false
+
+  counter:
+    busuanzi:
+      enable: false
+
+  showAuthorInfo: false
+  # SOP 较长，默认显示目录；生活和菜谱可在文章头部写 toc: true 单独开启
+  toc: false
+  autoCollapseToc: false
+  fancybox: false
+
+markup:
+  defaultMarkdownHandler: goldmark
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+  highlight:
+    noClasses: false
+    lineNos: false
+  goldmark:
+    renderer:
+      unsafe: true
+
+# 「最后更新」读取文章头部的 lastmod，没有写就用发布日期
+frontmatter:
+  lastmod: ['lastmod', 'date']

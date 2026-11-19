@@ -1,0 +1,26 @@
+{{ define "content" }}
+<section class="life-home" aria-labelledby="life-home-title">
+  <header class="blog-index-head">
+    <h1 id="life-home-title">生活笔记</h1>
+  </header>
+  <p class="life-home-intro">{{ .Site.Params.description }}</p>
+
+  <div class="life-sections">
+    {{ range .Site.Params.mainSections }}
+      {{ with site.GetPage . }}
+        <a class="life-section-card life-section-{{ .Section }}" href="{{ .RelPermalink }}">
+          <span class="life-section-name">{{ .Title }}</span>
+          <span class="life-section-desc">{{ .Description }}</span>
+          <span class="life-section-count">{{ len .RegularPages }} 篇</span>
+        </a>
+      {{ end }}
+    {{ end }}
+  </div>
+
+  <h2 class="life-subhead">最近更新</h2>
+  {{ $pages := where .Site.RegularPages "Section" "in" .Site.Params.mainSections }}
+  {{ $paginator := .Paginate $pages.ByDate.Reverse }}
+  {{ range $paginator.Pages }}{{ partial "life/entry.html" . }}{{ end }}
+</section>
+{{ partial "pagination.html" . }}
+{{ end }}

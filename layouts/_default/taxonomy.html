@@ -1,0 +1,10 @@
+{{ define "content" }}
+<section class="life-list">
+  <header class="blog-index-head">
+    <h1>#{{ .Title }}</h1>
+  </header>
+  {{ $paginator := .Paginate .Pages.ByDate.Reverse }}
+  {{ range $paginator.Pages }}{{ partial "life/entry.html" . }}{{ end }}
+</section>
+{{ partial "pagination.html" . }}
+{{ end }}

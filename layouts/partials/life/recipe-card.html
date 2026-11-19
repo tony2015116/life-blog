@@ -1,0 +1,44 @@
+{{- /* Facts and ingredient list from a recipe's front matter. */ -}}
+{{- $p := .Params -}}
+{{- $facts := slice -}}
+{{- with $p.prep_time }}{{ $facts = $facts | append (dict "k" "准备" "v" .) }}{{ end -}}
+{{- with $p.cook_time }}{{ $facts = $facts | append (dict "k" "烹饪" "v" .) }}{{ end -}}
+{{- with $p.total_time }}{{ $facts = $facts | append (dict "k" "总用时" "v" .) }}{{ end -}}
+{{- with $p.servings }}{{ $facts = $facts | append (dict "k" "份量" "v" (printf "%v 人份" .)) }}{{ end -}}
+{{- with $p.difficulty }}{{ $facts = $facts | append (dict "k" "难度" "v" .) }}{{ end -}}
+{{- if or $facts $p.ingredients }}
+<section class="recipe-box" aria-label="菜谱信息">
+  {{ with .Resources.GetMatch "cover.*" }}<img class="recipe-box-cover" src="{{ .RelPermalink }}" alt="{{ $.Title }}">{{ end }}
+  {{ with $facts }}
+  <dl class="recipe-facts">
+    {{ range . }}<div><dt>{{ .k }}</dt><dd>{{ .v }}</dd></div>{{ end }}
+  </dl>
+  {{ end }}
+  {{ with $p.ingredients }}
+  <h2 class="recipe-box-title">食材</h2>
+  {{- /* Split the flat list into groups at each {group: ...} line. */ -}}
+  {{- $groups := slice -}}
+  {{- $cur := dict "name" "" "items" slice -}}
+  {{- range . -}}
+    {{- if .group -}}
+      {{- if $cur.items }}{{ $groups = $groups | append $cur }}{{ end -}}
+      {{- $cur = dict "name" .group "items" slice -}}
+    {{- else -}}
+      {{- $cur = merge $cur (dict "items" ($cur.items | append .)) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $cur.items }}{{ $groups = $groups | append $cur }}{{ end -}}
+  {{ range $groups }}
+    <div class="recipe-ing-group">
+      {{ with .name }}<h3 class="recipe-group">{{ . }}</h3>{{ end }}
+      <ul class="recipe-ingredients">
+        {{ range .items }}
+          <li><label><input type="checkbox"> <span class="recipe-ing-name">{{ .name }}</span>{{ with .amount }}<span class="recipe-ing-amount">{{ . }}</span>{{ end }}</label></li>
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+  <p class="recipe-box-hint">勾选只为备菜时对照，刷新页面会清空。</p>
+  {{ end }}
+</section>
+{{- end }}

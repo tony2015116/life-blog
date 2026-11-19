@@ -1,0 +1,11 @@
+{{ define "content" }}
+<section class="life-list">
+  <header class="blog-index-head">
+    <h1>{{ .Title }}</h1>
+  </header>
+  {{ with .Content }}<div class="life-list-intro">{{ . }}</div>{{ end }}
+  {{ $paginator := .Paginate .RegularPages.ByDate.Reverse }}
+  {{ range $paginator.Pages }}{{ partial "life/entry.html" . }}{{ else }}<p class="life-empty">还没有文章。</p>{{ end }}
+</section>
+{{ partial "pagination.html" . }}
+{{ end }}

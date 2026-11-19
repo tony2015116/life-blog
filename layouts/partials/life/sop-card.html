@@ -1,0 +1,11 @@
+{{- /* Facts from an SOP's front matter: scope, frequency, version, last update. */ -}}
+{{- $p := .Params -}}
+<section class="sop-box" aria-label="SOP 信息">
+  <dl class="recipe-facts">
+    {{ with $p.scope }}<div class="sop-wide"><dt>适用场景</dt><dd>{{ . }}</dd></div>{{ end }}
+    {{ with $p.frequency }}<div><dt>频率</dt><dd>{{ . }}</dd></div>{{ end }}
+    {{ with $p.duration }}<div><dt>用时</dt><dd>{{ . }}</dd></div>{{ end }}
+    {{ with $p.version }}<div><dt>版本</dt><dd>v{{ . }}</dd></div>{{ end }}
+    <div><dt>最后更新</dt><dd>{{ .Lastmod.Format "2006-01-02" }}</dd></div>
+  </dl>
+</section>

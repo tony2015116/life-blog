@@ -1,0 +1,179 @@
+/* 生活笔记专用样式。基础布局沿用 custom.css，这里只换强调色并加栏目、菜谱和 SOP 组件。 */
+:root {
+  --blog-accent: #a84f2a;
+  --life-life: #a84f2a;
+  --life-sop: #2f6f62;
+  --life-recipes: #9a6a12;
+  --life-card: #fbf8f4;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-blog-theme="light"]) {
+    --blog-accent: #eea47f;
+    --life-life: #eea47f;
+    --life-sop: #86cbb9;
+    --life-recipes: #e3bd6c;
+    --life-card: #22272b;
+  }
+}
+:root[data-blog-theme="dark"] {
+  --blog-accent: #eea47f;
+  --life-life: #eea47f;
+  --life-sop: #86cbb9;
+  --life-recipes: #e3bd6c;
+  --life-card: #22272b;
+}
+
+.blog-profile-tech-icon {
+  background: currentColor;
+  mask: url("../images/profile-blog.svg") center / contain no-repeat;
+}
+
+/* 首页 */
+.life-home-intro, .life-list-intro { color: var(--blog-muted); margin: 0 0 22px; }
+.life-list-intro p { margin: 0 0 .6em; }
+.life-sections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 34px;
+}
+.minimal-site .life-section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 16px 14px;
+  border: 1px solid var(--blog-line);
+  border-top: 3px solid var(--life-accent, var(--blog-accent));
+  border-radius: 6px;
+  background: var(--life-card);
+  color: var(--blog-text);
+  text-decoration: none;
+}
+.minimal-site .life-section-card:hover { border-color: var(--life-accent); }
+.life-section-life { --life-accent: var(--life-life); }
+.life-section-sop { --life-accent: var(--life-sop); }
+.life-section-recipes { --life-accent: var(--life-recipes); }
+.life-section-name { font: 700 19px/1.4 var(--blog-serif); color: var(--life-accent); }
+.life-section-desc { font-size: 13.5px; color: var(--blog-muted); line-height: 1.55; flex: 1; }
+.life-section-count { font-size: 12px; color: var(--blog-muted); font-variant-numeric: tabular-nums; }
+.life-subhead {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--blog-line);
+  font: 700 18px/1.4 var(--blog-serif);
+}
+
+/* 列表行 */
+.life-entry-desc { margin: 3px 0 0; color: var(--blog-muted); font-size: 14px; }
+.minimal-site .life-chip, .minimal-site .post-meta .life-chip { font-weight: 600; }
+.minimal-site .post .post-meta a.life-chip-life, .minimal-site .life-chip-life { color: var(--life-life); }
+.minimal-site .post .post-meta a.life-chip-sop, .minimal-site .life-chip-sop { color: var(--life-sop); }
+.minimal-site .post .post-meta a.life-chip-recipes, .minimal-site .life-chip-recipes { color: var(--life-recipes); }
+.life-empty { color: var(--blog-muted); padding: 16px 0; list-style: none; }
+
+/* SOP 列表 */
+.sop-list { list-style: none; margin: 0; padding: 0; }
+.sop-list li { padding: 15px 0; border-bottom: 1px solid var(--blog-line); }
+.minimal-site .sop-list-title { color: var(--blog-text); font-size: 17px; font-weight: 650; }
+.minimal-site .sop-list-title:hover { color: var(--blog-accent); }
+.sop-list p { margin: 3px 0 0; font-size: 13.5px; color: var(--blog-muted); }
+
+/* 菜谱卡片 */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.minimal-site .recipe-card a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--blog-line);
+  border-radius: 6px;
+  background: var(--life-card);
+  color: var(--blog-text);
+}
+.minimal-site .recipe-card a:hover { border-color: var(--life-recipes); }
+.recipe-cover { display: block; width: 100%; aspect-ratio: 32 / 21; height: auto; object-fit: cover; }
+.recipe-cover-empty {
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--life-recipes) 14%, var(--blog-bg));
+  color: var(--life-recipes);
+  font: 700 44px/1 var(--blog-serif);
+}
+.recipe-card-title { padding: 11px 13px 2px; font-weight: 650; font-size: 16px; }
+.recipe-card-meta { padding: 0 13px 12px; color: var(--blog-muted); font-size: 12.5px; }
+
+/* 文章页 */
+.minimal-site .life-post .post-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.life-updated, .life-location { color: var(--blog-muted); }
+.life-lead { margin: 14px 0 0; color: var(--blog-muted); font-size: 16px; line-height: 1.7; }
+
+.recipe-box, .sop-box {
+  margin: 22px 0 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--blog-line);
+  border-radius: 6px;
+  background: var(--life-card);
+}
+.recipe-box-cover { display: block; width: 100%; max-height: 380px; object-fit: cover; border-radius: 4px; margin-bottom: 16px; }
+.recipe-facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; }
+.recipe-facts div { min-width: 64px; }
+.recipe-facts .sop-wide { flex-basis: 100%; }
+.recipe-facts dt { font-size: 12px; color: var(--blog-muted); }
+.recipe-facts dd { margin: 1px 0 0; font-weight: 600; }
+.minimal-site .recipe-box-title {
+  margin: 18px 0 6px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--blog-line);
+  font: 700 17px/1.4 var(--blog-serif);
+}
+.recipe-ingredients {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  column-gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.recipe-ingredients li { padding: 4px 0; border-bottom: 1px dotted var(--blog-line); }
+.recipe-ingredients label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; }
+.recipe-ingredients input { accent-color: var(--life-recipes); }
+.recipe-ingredients input:checked ~ span { color: var(--blog-muted); text-decoration: line-through; }
+.recipe-ing-amount { margin-left: auto; color: var(--blog-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.minimal-site .recipe-box .recipe-group { margin: 12px 0 2px; padding: 0; border: 0; color: var(--life-recipes); font-family: inherit; font-size: 14px; font-weight: 650; line-height: 1.5; }
+.recipe-ing-group:first-of-type .recipe-group { margin-top: 4px; }
+.recipe-box-hint { margin: 8px 0 0; font-size: 12px; color: var(--blog-muted); }
+
+/* 目录（SOP 默认开启） */
+.life-toc {
+  margin: 0 0 24px;
+  padding: 12px 18px;
+  border-left: 3px solid var(--life-sop);
+  background: var(--life-card);
+  font-size: 14px;
+}
+.life-toc-title { margin: 0 0 4px; font-weight: 650; color: var(--blog-muted); }
+.life-toc ul { margin: 0; padding-left: 1.2em; }
+.life-toc li { margin: 2px 0; }
+.minimal-site .life-toc a { color: var(--blog-text); }
+.minimal-site .life-toc a:hover { color: var(--blog-accent); }
+
+/* 正文里的步骤和清单 */
+.minimal-site .life-post .post-content ol > li { margin: .45em 0; }
+.minimal-site .life-post .post-content ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: .2em; }
+.minimal-site .life-post .post-content li > input[type="checkbox"] { margin-right: .45em; accent-color: var(--life-sop); }
+
+@media (max-width: 640px) {
+  .life-sections { grid-template-columns: 1fr; }
+  .recipe-box, .sop-box { padding: 15px; }
+}
+@media print {
+  .blog-masthead, .blog-profile, .blog-footer, .post-nav, .post-toc, .recipe-box-hint { display: none !important; }
+  .blog-shell { display: block; padding: 0; }
+}

@@ -1,0 +1,10 @@
+{{- /* Recipe cover: an image named cover.* in the post folder, or a lettered placeholder. */ -}}
+{{- with .Resources.GetMatch "cover.*" -}}
+  {{- $img := . -}}
+  {{- if in (slice "jpg" "jpeg" "png" "webp" "tif" "tiff" "bmp" "gif") (strings.TrimPrefix "." (path.Ext .Name) | lower) -}}
+    {{- $img = .Fill "640x420 webp q78" -}}
+  {{- end -}}
+  <img class="recipe-cover" src="{{ $img.RelPermalink }}" alt="" loading="lazy" width="640" height="420">
+{{- else -}}
+  <span class="recipe-cover recipe-cover-empty" aria-hidden="true">{{ substr .Title 0 1 }}</span>
+{{- end -}}

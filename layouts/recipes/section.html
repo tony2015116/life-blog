@@ -1,0 +1,27 @@
+{{ define "content" }}
+<section class="life-list">
+  <header class="blog-index-head">
+    <h1>{{ .Title }}</h1>
+  </header>
+  {{ with .Content }}<div class="life-list-intro">{{ . }}</div>{{ end }}
+  <ul class="recipe-grid">
+    {{ range .RegularPages.ByDate.Reverse }}
+      <li class="recipe-card">
+        <a href="{{ .RelPermalink }}">
+          {{ partial "life/cover.html" . }}
+          <span class="recipe-card-title">{{ .Title }}</span>
+          <span class="recipe-card-meta">
+            {{- $bits := slice -}}
+            {{- with .Params.total_time }}{{ $bits = $bits | append . }}{{ end -}}
+            {{- with .Params.servings }}{{ $bits = $bits | append (printf "%v 人份" .) }}{{ end -}}
+            {{- with .Params.difficulty }}{{ $bits = $bits | append . }}{{ end -}}
+            {{ delimit $bits " · " }}
+          </span>
+        </a>
+      </li>
+    {{ else }}
+      <li class="life-empty">还没有菜谱。</li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
