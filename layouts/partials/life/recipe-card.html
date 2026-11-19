@@ -20,7 +20,10 @@
 {{- if $cur.items }}{{ $groups = $groups | append $cur }}{{ end -}}
 {{- if or $facts $groups }}
 <section class="recipe-box" aria-label="菜谱信息">
-  {{ with .Resources.GetMatch "cover.*" }}<img class="recipe-box-cover" src="{{ .RelPermalink }}" alt="{{ $.Title }}">{{ end }}
+  {{ with .Resources.GetMatch "cover.*" }}
+    {{- $img := partial "life/process-image.html" (dict "img" . "op" "fill" "spec" "1520x760") -}}
+    <img class="recipe-box-cover" src="{{ $img.RelPermalink }}" alt="{{ $.Title }}"{{ with $img.Width }} width="{{ . }}" height="{{ $img.Height }}"{{ end }}>
+  {{ end }}
   {{ with $facts }}
   <dl class="recipe-facts">
     {{ range . }}<div><dt>{{ .k }}</dt><dd>{{ .v }}</dd></div>{{ end }}

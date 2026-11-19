@@ -1,0 +1,21 @@
+{{- /*
+  Shrink and compress a photo for the web.
+  Takes (dict "img" <image resource> "op" "fill"|"fit" "spec" "1520x760").
+  Turns the photo upright from its EXIF orientation first, then crops to the
+  exact size (fill) or shrinks to fit within it (fit, never enlarges), and
+  saves it as WebP. GIF, SVG and other files come back unchanged.
+*/ -}}
+{{- $img := .img -}}
+{{- $ext := strings.TrimPrefix "." (path.Ext $img.Name) | lower -}}
+{{- if in (slice "jpg" "jpeg" "png" "webp" "tif" "tiff" "bmp") $ext -}}
+  {{- $img = $img.Filter images.AutoOrient -}}
+  {{- $spec := printf "%s webp q80" .spec -}}
+  {{- if eq .op "fill" -}}
+    {{- $img = $img.Fill $spec -}}
+  {{- else -}}
+    {{- $w := int (index (split .spec "x") 0) -}}
+    {{- if gt $img.Width $w -}}{{- $img = $img.Resize (printf "%dx %s" $w "webp q80") -}}
+    {{- else if ne $ext "webp" -}}{{- $img = $img.Process "webp q80" -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $img -}}

@@ -1,0 +1,9 @@
+{{- /* Photos in post bodies: shrink to at most 1600px wide and save as WebP. */ -}}
+{{- $src := .Destination -}}
+{{- $res := .Page.Resources.Get (strings.TrimPrefix "./" $src) -}}
+{{- if and $res (eq $res.ResourceType "image") -}}
+  {{- $img := partial "life/process-image.html" (dict "img" $res "op" "fit" "spec" "1600x") -}}
+  <img src="{{ $img.RelPermalink }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ with $img.Width }} width="{{ . }}" height="{{ $img.Height }}"{{ end }} loading="lazy" decoding="async">
+{{- else -}}
+  <img src="{{ $src | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy">
+{{- end -}}
