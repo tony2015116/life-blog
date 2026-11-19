@@ -27,17 +27,19 @@ blogdown::install_hugo(version = "0.170.0", extended = FALSE)
 
 ## 三、新建文章
 
-在 RStudio 选择 **Addins → New Post**：
+每个栏目都有自己的模板（`archetypes/` 里的 `life.md`、`sop.md`、`recipes.md`），新建时自动套用：
 
-1. **Subdirectory** 选栏目：`life`、`sop` 或 `recipes`（默认是 `life`）。
-2. **Archetype** 选同名模板：`life`、`sop` 或 `recipes`。模板会预先填好该栏目需要的字段和小节。
-3. 填标题和英文短名（Slug），格式选 **Markdown**。
+1. 在 RStudio 选择 **Addins → New Post**。
+2. **Subdirectory** 选栏目：`life`、`sop` 或 `recipes`（默认是 `life`）。**Archetype** 留空即可，会按栏目自动用同名模板；也可以手动选同名模板。
+3. 填标题和英文短名（Slug），格式选 **Markdown**，点 **Done**。
+4. 打开的文件里已经列好该栏目要填的字段和小节。正文开头的「填写说明」注释写给自己看，不会显示在网页上，写完可以删掉。
 
 也可以在 Console 里新建：
 
 ```r
-blogdown::new_post("番茄牛腩", kind = "recipes", subdir = "recipes", slug = "beef-tomato")
-blogdown::new_post("月度家庭对账", kind = "sop", subdir = "sop", slug = "monthly-budget")
+blogdown::new_post("番茄牛腩", subdir = "recipes", slug = "beef-tomato")
+blogdown::new_post("月度家庭对账", subdir = "sop", slug = "monthly-budget")
+blogdown::new_post("周末去爬山", subdir = "life", slug = "weekend-hike")
 ```
 
 新文章默认 `draft: true`，确认后改为 `draft: false` 再提交。
