@@ -1,4 +1,4 @@
-# MGUO 的生活笔记
+# MGUO 的生活笔记 
 
 [访问生活笔记](https://life.mguo.dpdns.org/) · [技术博客](https://blog.mguo.dpdns.org/) · [个人主页](https://mguo.dpdns.org/)
 
